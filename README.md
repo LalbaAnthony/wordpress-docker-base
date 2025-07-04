@@ -1,4 +1,4 @@
-# Wordpress using Docker
+# Base Wordpress using Docker
 
 A default WordPress environment using Docker, designed to be used as a base for WordPress development projects. This setup includes a MariaDB database and is configured to work with the latest version of WordPress.
 
