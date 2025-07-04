@@ -27,10 +27,17 @@ docker-compose up --build
 
 ```bash
 # Check that wp-config.php is correctly configured
-docker exec -it tl_backend_wp sh
+docker exec -it myproject_backend_wp sh
 grep -E "DB_(HOST|NAME|USER|PASSWORD)" /var/www/html/wp-config.php
 
 # Check that database is correctly configured
-docker exec -it tl_database_mariadb sh
+docker exec -it myproject_database_mariadb sh
 mariadb -u root -p # ? Connect using MARIADB_ROOT_PASSWORD
 ```
+
+## 🛠️ - Configuration
+
+First, customize the `.env` file to set your environment variables. This file contains sensitive information such as database credentials and should not be shared publicly.
+
+Also, you may want to replace all `myproject_` prefixes with your own project key to avoid conflicts with container names and volumes in your Docker environment.
+This can be done by updating the `docker-compose.yml` file and the `.env` file, or simply searching for `myproject_` in the project directory and replacing it with your desired prefix.

@@ -1,6 +1,6 @@
 services:
-  tl_database:
-    container_name: tl_database_mariadb
+  myproject_database:
+    container_name: myproject_database_mariadb
     image: mariadb:11
     env_file: .env
     environment:
@@ -13,22 +13,22 @@ services:
     networks: [tl-network]
     restart: unless-stopped
 
-  tl_dbms:
-    container_name: tl_dbms_phpmyadmin
+  myproject_dbms:
+    container_name: myproject_dbms_phpmyadmin
     image: phpmyadmin/phpmyadmin:latest
     restart: unless-stopped
     ports:
       - "8081:80"
     environment:
-      PMA_HOST: tl_database
+      PMA_HOST: myproject_database
       PMA_PORT: 3306
       PMA_USER: ${DB_USER}
       PMA_PASSWORD: ${DB_PASSWORD}
-    depends_on: [tl_database]
+    depends_on: [myproject_database]
     networks: [tl-network]
 
-  tl_backend:
-    container_name: tl_backend_wp
+  myproject_backend:
+    container_name: myproject_backend_wp
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -37,7 +37,7 @@ services:
     ports:
       - "8080:80"
     environment:
-      - WP_DB_HOST=tl_database:3306
+      - WP_DB_HOST=myproject_database:3306
       - WP_DB_NAME=${DB_DATABASE}
       - WP_DB_USER=${DB_USER}
       - WP_DB_PASSWORD=${DB_PASSWORD}
@@ -47,7 +47,7 @@ services:
       - WP_ADMIN_PASSWORD=${WP_ADMIN_PASSWORD}
       - WP_ADMIN_EMAIL=${WP_ADMIN_EMAIL}
     networks: [tl-network]
-    depends_on: [tl_database]
+    depends_on: [myproject_database]
     restart: unless-stopped
 
 networks:
